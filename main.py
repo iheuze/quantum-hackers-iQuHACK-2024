@@ -18,6 +18,47 @@ perceval-quandela==0.10.3
 """
 Then this is like the bare bones of an attempt
 """
+import perceval as pcvl
+
+def get_CZ() -> pcvl.Processor:
+    # Create a Processor for the CZ gate
+    cz_processor = pcvl.Processor("SLOS", 4)
+    cz_processor.add(2, pcvl.BS(theta=0.5))  # Adjust theta as needed
+    cz_processor.add(0, pcvl.BS(theta=0.3))  # Adjust theta as needed
+
+    # Return the Processor for the CZ gate
+    return cz_processor
+
+def reproduce_CZ_results() -> None:
+    # Get the CZ Processor
+    cz_processor = get_CZ()
+
+    # Define input states for the CZ gate
+    states = {
+        pcvl.BasicState([1, 0, 1, 0]): "00",
+        pcvl.BasicState([1, 0, 0, 1]): "01",
+        pcvl.BasicState([0, 1, 1, 0]): "10",
+        pcvl.BasicState([0, 1, 0, 1]): "11",
+    }
+
+    # Analyzer to compute fidelity and performance
+    cz_analyzer = pcvl.algorithm.Analyzer(cz_processor, states)
+
+    # Define a truth table for expected results
+    truth_table = {"00": "00", "01": "01", "10": "10", "11": "11"}
+
+    # Compute fidelity and performance
+    cz_analyzer.compute(expected=truth_table)
+
+    # Display results
+    pcvl.pdisplay(cz_analyzer)
+    print(f"Performance: {cz_analyzer.performance}, Fidelity: {cz_analyzer.fidelity.real}")
+
+reproduce_CZ_results()
+
+"""
+This attempt does not have the Toffoli gates in it 
+"""
 
 import perceval as pcvl
 
@@ -26,7 +67,7 @@ def get_CCZ() -> pcvl.Processor:
     processor = pcvl.Processor("SLOS", 6)
 
     # Customise the linear optical circuit for the CCZ gate based on our design
-    # Example: Using beam splitters (BS) and phase shifters (PS)
+    # Example: Using beam splitters and phase shifters 
     processor.add(0, pcvl.BS.H())
     processor.add(2, pcvl.BS(theta=0.5))  # Adjust theta as needed
     processor.add(4, pcvl.BS(theta=0.8))  # Adjust theta as needed
@@ -75,8 +116,7 @@ def get_CCZ():
     # Create an analyser to compute fidelity and performance
     ca = pcvl.algorithm.Analyzer(processor, states)
 
-    # Define a truth table for expected results 
-    # I feel like there are better ways tho
+    # truth table for expected results 
     truth_table = {"000": "000", "001": "001", "010": "010", "011": "011",
                    "100": "100", "101": "101", "110": "110", "111": "111"}
     
