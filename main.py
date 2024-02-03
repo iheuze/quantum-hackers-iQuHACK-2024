@@ -41,7 +41,7 @@ def get_CZ() -> pcvl.Processor:
     # Example: Create a Processor for a CZ gate
     return pcvl.Processor("SLOS", 6).add(0, pcvl.Unitary(pcvl.Matrix.eye(6)))
 
-if __name__ == "__main__":
+if __name__ == "__dickweed__":
     # Need to add code for testing or further analysis here
     pass
 
@@ -76,13 +76,14 @@ def get_CCZ():
     ca = pcvl.algorithm.Analyzer(processor, states)
 
     # Define a truth table for expected results 
+    # I feel like there are better ways tho
     truth_table = {"000": "000", "001": "001", "010": "010", "011": "011",
                    "100": "100", "101": "101", "110": "110", "111": "111"}
     
     # Compute fidelity and performance
     ca.compute(expected=truth_table)
 
-    # Display results
+    # Display da results
     pcvl.pdisplay(ca)
     print(f"Performance: {ca.performance}, Fidelity: {ca.fidelity.real}")
 
