@@ -47,3 +47,29 @@ data (dual rail) ─────┤     ├───── data (dual rail)
             .add_port(2, Port(Encoding.DUAL_RAIL, 'data')) \
             .add_herald(4, 1) \
             .add_herald(5, 1)
+
+
+
+heralded_cz = HeraldedCzItem()
+cz_circuit = heralded_cz.build_circuit()
+cz_processor = heralded_cz.build_processor()
+pcvl.pdisplay(cz_circuit) # the regular circuit
+
+
+
+states = {
+    pcvl.BasicState([1, 0, 1, 0]): "00",
+    pcvl.BasicState([1, 0, 0, 1]): "01",
+    pcvl.BasicState([0, 1, 1, 0]): "10",
+    pcvl.BasicState([0, 1, 0, 1]): "11"
+}
+
+ca = pcvl.algorithm.Analyzer(cz_processor, states)
+
+truth_table = {"00": "00", "01": "01", "10": "10", "11": "11"}
+ca.compute(expected=truth_table)
+
+pcvl.pdisplay(ca)
+print(
+    f"performance = {ca.performance}, fidelity = {ca.fidelity.real}")
+pcvl.pdisplay(cz_processor, recursive=True) # circuit plus processing
