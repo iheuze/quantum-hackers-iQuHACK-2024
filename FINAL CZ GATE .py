@@ -4,7 +4,7 @@ from perceval.components.unitary_components import *
 from perceval.components.component_catalog import CatalogItem, AsType
 from perceval.components.port import Port, Encoding
 
-
+# Catalog Item for the Heralded CZ gate
 class HeraldedCzItem(CatalogItem):
     # asking for inputs theta1 and theta2
     def __init__(self, theta1, theta2):
@@ -40,7 +40,6 @@ class HeraldedCzItem(CatalogItem):
 
 
 # Testing the gate
-
 # defining input states and truth table
 states = {
     pcvl.BasicState([1, 0, 1, 0]): "00",
@@ -87,6 +86,8 @@ for theta1_val in theta1_list:
 
 
 import matplotlib.pyplot as plt
+
+# Plotting Results
 
 # Extracting theta1, theta2, and performance values from the performance_list
 theta1_values = [d['theta1'] for d in performance_list]
