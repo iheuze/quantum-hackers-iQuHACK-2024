@@ -1,3 +1,4 @@
+import numpy as np
 import perceval as pcvl
 from perceval.rendering.circuit import SymbSkin, PhysSkin
 from perceval.components import BS, PERM, Port
